@@ -59,7 +59,6 @@ if(NOT EIGEN3_INCLUDE_DIR)
 endif()
 include_directories(${EIGEN3_INCLUDE_DIR})
 
-# There should be a CMakeLists.txt in the specified directory.
 set(GLFW_DIR "deps/glfw")
 if(NOT GLFW_DIR)
    message(FATAL_ERROR "deps/glfw not found. Did you run git submodule init && git submodule update?")
@@ -75,7 +74,6 @@ endif()
 include_directories(${GLFW_DIR}/include)
 target_link_libraries(${CMAKE_PROJECT_NAME} glfw ${GLFW_LIBRARIES})
 
-# Get the GLEW environment variable.
 set(GLEW_DIR "$ENV{GLEW_DIR}")
 if(NOT GLEW_DIR)
    message(FATAL_ERROR "Please point the environment variable GLEW_DIR to the root directory of your GLEW installation.")
@@ -87,6 +85,13 @@ if(WIN32)
 else()
    target_link_libraries(${CMAKE_PROJECT_NAME} ${GLEW_DIR}/lib/libGLEW.a)
 endif()
+
+set(SFML_DIR "deps/sfml")
+if (NOT SFML_DIR)
+   message(FATAL_ERROR "${SFML_DIR} not found. Did you run git submodule init && git submodule update?")
+endif()
+add_subdirectory(${SFML_DIR})
+
 # OS specific options and libraries
 if(WIN32)
    # c++0x is enabled by default.
